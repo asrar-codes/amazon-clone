@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* body {
+ position: relative;
+} */
+
+/*
+
+
+
+@media screen and (max-width: 800px) {
+ .slick-container {
+  width: 100%;
+  margin: 0 1rem;
+  margin-top: 2rem;
+ }
+
+ .slide-image {
+  width: 80%;
+  object-fit: cover;
+  border-radius: 6px;
+ }
+
+
+*/
+
+
+/*  
+>>===================    React slick css      =================>>
+*/
+
+.slick-prev::before,
+.slick-next::before {
+ /* background: black; */
+ font-size: 2.5rem;
+ color: black;
+}
+.slick-arrow {
+ z-index: 10;
+ top:30%;
+}
+.slick-prev {
+ left: 1rem;
+}
+
+.slick-next {
+ right: 2rem;
+}
+.fixed-header{
+ position: fixed;
+ top: 0;
+ left: 0;
+ width: 100%;
+}
+
+.active{
+ color:orange;
+
+}
+
+
+/* >>===================      SIDEBAR               =================>> */
+.show-sidebar{
+ 
+}
