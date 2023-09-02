@@ -33,10 +33,20 @@ export const ContextProvider = ({ children }) => {
     }
   };
 
+  /*
+
+  >>======= Sidebar
+ */
+
+  const hideSidebar = () => {
+    dispatch({ type: "HIDE_SIDEBAR" });
+  };
+
   return (
     <AppContext.Provider
       value={{
         ...state,
+        hideSidebar,
         logout,
         toggleSidebar,
         formRef,
