@@ -38,7 +38,7 @@
  color: black;
 }
 .slick-arrow {
- z-index: 10;
+ z-index: 5;
  top:30%;
 }
 .slick-prev {

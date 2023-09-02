@@ -1,24 +1,29 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import SharedLayout from "./Pages/SharedLayout";
-import Home from "./Pages/Home";
-import Mobiles from "./Pages/Mobiles";
-import Electronics from "./Pages/Electronics";
-import Prime from "./Pages/Prime";
-import Kitchen from "./Pages/Kitchen";
-import NotFound from "./Pages/NotFound";
-
+import {
+  SharedLayout,
+  Home,
+  About,
+  Cart,
+  Products,
+  SingleProduct,
+  CheckOut,
+  NotFound,
+  Login,
+} from "./Pages";
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<SharedLayout />}>
           <Route index element={<Home />} />
-          <Route path="mobiles" element={<Mobiles />} />
-          <Route path="electronics" element={<Electronics />} />
-          <Route path="prime" element={<Prime />} />
-          <Route path="kitchen" element={<Kitchen />} />
+          <Route path="products" element={<Products />} />
+          <Route path="about" element={<About />} />
+          <Route path="cart" element={<Cart />} />
+          <Route path="checkout" element={<CheckOut />} />
+          <Route path="products/:id" element={<SingleProduct />} />
           <Route path="*" element={<NotFound />} />
         </Route>
+        <Route path="signin" element={<Login />} />
       </Routes>
     </BrowserRouter>
   );

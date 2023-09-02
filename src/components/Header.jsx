@@ -2,12 +2,16 @@ import React from "react";
 import { HiShoppingCart } from "react-icons/hi";
 import { FaSearch } from "react-icons/fa";
 import { NavLink, Link } from "react-router-dom";
+import { auth } from "../firebase/firebase";
+import { useGlobalContext } from "../context/context";
 
 const main_logo =
   "https://i.pinimg.com/originals/47/b7/bd/47b7bdac4285ee24654ca7d68cf06351.png";
 const Header = () => {
+  const { logout } = useGlobalContext();
+  const userIsSignedIn = auth.currentUser !== null;
   return (
-    <header className="flex gap-2 items-center justify-between sticky top-0 left-0 right-0 z-10 bg-black text-white  ">
+    <header className="flex gap-2 items-center justify-between sticky top-0 left-0 right-0 z-40 bg-black text-white  ">
       <div className="logo mx-4">
         <NavLink to="/">
           <img
@@ -27,9 +31,15 @@ const Header = () => {
       </div>
       <section className="account-details flex gap-4 text-sm">
         <div className="sign-in">
-          <button className="w-fit"> hello asrarmaqbol@gmailcom</button>
+          <button className="w-fit">
+            {" "}
+            hello {userIsSignedIn ? auth.currentUser.email : "sign in"}
+          </button>
           <button className=" px-2">
-            <Link to="signin"> sign in</Link>
+            <Link to="signin" onClick={userIsSignedIn ? logout() : ""}>
+              {" "}
+              {userIsSignedIn ? "sign out" : "sign in"}
+            </Link>
           </button>
         </div>
         <button>Your Prime</button>

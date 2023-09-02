@@ -1,7 +1,7 @@
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
-import { useGlobalContext } from "../context";
+import { useGlobalContext } from "../context/context";
 
 const Carousel = () => {
   const { slick } = useGlobalContext();

@@ -1,7 +1,7 @@
 import React from "react";
 import { FaBars } from "react-icons/fa";
 import { NavLink, Link } from "react-router-dom";
-import { useGlobalContext } from "../context";
+import { useGlobalContext } from "../context/context";
 
 const Navbar = () => {
   const { toggleSidebar } = useGlobalContext();
@@ -17,35 +17,29 @@ const Navbar = () => {
         </li>
         <li>
           <NavLink
-            to="mobiles"
+            to="products"
             className={({ isActive }) => (isActive ? "link active" : "link")}
             end
           >
-            Mobiles
+            Products
           </NavLink>
         </li>
         <li>
           <NavLink
-            to="electronics"
+            to="cart"
             className={({ isActive }) => (isActive ? "link active" : "link")}
+            end
           >
-            Electronics
+            Cart
           </NavLink>
         </li>
         <li>
           <NavLink
-            to="kitchen"
+            to="about"
             className={({ isActive }) => (isActive ? "link active" : "link")}
+            end
           >
-            Kitchen Ware
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="prime"
-            className={({ isActive }) => (isActive ? "link active" : "link")}
-          >
-            Prime
+            About
           </NavLink>
         </li>
       </ul>
