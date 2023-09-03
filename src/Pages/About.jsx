@@ -25,9 +25,9 @@ const About = () => {
       <div className="img-container text-center">
         <img src={bed} alt="bed" className="w-10/12" />
       </div>
-      <div className="about col-start-1 col-end-3">
-        <div>
-          <p className="text-3xl flex gap-2">
+      <div className="about  col-start-1 col-end-3 ">
+        <div className="mt-4 sm:mt-0">
+          <p className="text-2xl flex gap-2 sm:text-3xl ">
             We love
             <span className="border p-1 ">BoxSpace</span>
           </p>
