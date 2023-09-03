@@ -56,10 +56,18 @@
 /*  
 >>===================    Project CSS      =================>>
 */
-
 .page {
- width: 80%;
+ width: 95%;
  height: 100vh;
  margin: 0 auto;
- margin-top: 5rem;
+ margin-top: 2rem;
+}
+@media screen and (min-width:680px) {
+  .page {
+      width: 80%;
+      height: 100vh;
+      margin: 0 auto;
+      margin-top: 5rem;
+    }
+  
 }
