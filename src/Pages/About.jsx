@@ -4,30 +4,30 @@ import { Link } from "react-router-dom";
 
 const About = () => {
   return (
-    <section className="page  grid grid-cols-2">
+    <section className="page  sm:grid grid-cols-2">
       <header>
         <div className="text">
-          <p className="text-6xl font-semibold ">
+          <p className="text-4xl font-semibold ">
             We are changing <br /> the way people shop
           </p>
-          <p className="text-lg mt-4">
+          <p className="text-lg sm:mt-4">
             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore
             repellat explicabo enim soluta temporibus asperiores aut obcaecati
             perferendis porro nobis.
           </p>
           <Link to="/products" className="">
-            <button className="p-1 mt-6 text-xl  bg-blue-400 rounded-md">
+            <button className="p-1 mt-6 text-lg  bg-blue-400 rounded-md">
               Our Products
             </button>
           </Link>
         </div>
       </header>
-      <div className="img-container ">
+      <div className="img-container text-center">
         <img src={bed} alt="bed" className="w-10/12" />
       </div>
       <div className="about col-start-1 col-end-3">
         <div>
-          <p className="text-5xl flex gap-2">
+          <p className="text-3xl flex gap-2">
             We love
             <span className="border p-1 ">BoxSpace</span>
           </p>
