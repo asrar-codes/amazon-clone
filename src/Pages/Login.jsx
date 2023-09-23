@@ -41,9 +41,12 @@ const Login = () => {
   };
 
   return (
-    <form ref={formRef} className="form w-11/12 max-w-xl mx-auto mt-20">
+    <form
+      ref={formRef}
+      className="form w-11/12 max-w-xl mx-auto mt-20 shadow-md shadow-gray-300"
+    >
       <div className="form-header text-center"></div>
-      <section className="form-container flex flex-col gap-4 border-2 border-gray-300 p-6 rounded-lg shadow-mainShadow">
+      <section className="form-container flex flex-col gap-4 border-2 border-gray-300 p-6 rounded-lg ">
         <p className="text-3xl font-semibold text-center">Log in</p>
         <label htmlFor="email" className="flex flex-col">
           Email
@@ -53,6 +56,7 @@ const Login = () => {
             id="email"
             className="p-1  border-2   outline-slate-400"
             ref={emailRef}
+            autoComplete="current-email"
             required
           />
         </label>
@@ -64,6 +68,7 @@ const Login = () => {
             id="password"
             className="p-1 border-2 outline-slate-400"
             ref={passwordRef}
+            autoComplete="current-password"
           />
         </label>
 

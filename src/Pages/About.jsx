@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const About = () => {
   return (
-    <section className="page  sm:grid grid-cols-2">
+    <section className="w-11/12  mx-auto mt-8  sm:grid grid-cols-2">
       <header>
         <div className="text">
           <p className="text-4xl font-semibold ">

@@ -5,9 +5,13 @@ const reducer = (state, action) => {
       return { ...state, isSidebarOpen: !state.isSidebarOpen };
     case "HIDE_SIDEBAR":
       return { ...state, isSidebarOpen: !state.isSidebarOpen };
+    case "TOGGLE_DARK_MODE":
+      return { ...state, isDarkMode: !state.isDarkMode };
+    case "HANDLE_PAGE_NO":
+      return { ...state, index: action.payload };
 
     default:
-      throw new Error("you're not handling a dispatch");
+      throw new Error(`you're not handling a dispatch: ${action.type}`);
   }
 };
 export default reducer;

@@ -45,8 +45,14 @@
 }
 
 .active{
- color:orange;
+  padding-bottom: .35rem;
+ border-bottom: 2px solid #fff;
 
+}
+.btn-active{
+  color: orange;
+  background-color: #333;
+  font-size: 1.2rem;
 }
 
 
@@ -56,18 +62,4 @@
 /*  
 >>===================    Project CSS      =================>>
 */
-.page {
- width: 95%;
- height: 100vh;
- margin: 0 auto;
- margin-top: 2rem;
-}
-@media screen and (min-width:680px) {
-  .page {
-      width: 80%;
-      height: 100vh;
-      margin: 0 auto;
-      margin-top: 5rem;
-    }
-  
-}
+

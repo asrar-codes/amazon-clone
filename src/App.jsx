@@ -1,11 +1,4 @@
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  createBrowserRouter,
-  HashRouter,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import {
   SharedLayout,
   Home,
@@ -16,10 +9,15 @@ import {
   CheckOut,
   NotFound,
   Login,
+  SignUp,
+  SinglePageError,
 } from "./Pages";
-import { Children, createElement } from "react";
-import Checkout from "./Pages/Checkout";
-import SinglePageError from "./Pages/SinglePageError";
+import { loader as fetchFeaturedProductsLoader } from "./Pages/SharedLayout";
+import { loader as singleProductLoader } from "./Pages/SingleProduct";
+import { loader as fetchProductsLoader } from "./Pages/Products";
+// export const products_url = "https://course-api.com/react-store-products";
+
+// export const single_product_url = `https://course-api.com/react-store-single-product?id=`;
 
 const router = createBrowserRouter([
   {
@@ -30,16 +28,20 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
+        loader: fetchFeaturedProductsLoader,
         errorElement: <SinglePageError />,
       },
       {
         path: "products",
         element: <Products />,
+        loader: fetchProductsLoader,
         errorElement: <SinglePageError />,
       },
       {
         path: "products/:id",
+        loader: singleProductLoader,
         element: <SingleProduct />,
+        errorElement: <SinglePageError />,
       },
       {
         path: "cart",
@@ -48,15 +50,26 @@ const router = createBrowserRouter([
       },
       {
         path: "checkout",
-        element: <Checkout />,
+        element: <CheckOut />,
         errorElement: <SinglePageError />,
       },
+
       {
         path: "about",
         element: <About />,
         errorElement: <SinglePageError />,
       },
     ],
+  },
+  {
+    path: "login",
+    element: <Login />,
+    errorElement: <SinglePageError />,
+  },
+  {
+    path: "signup",
+    element: <SignUp />,
+    errorElement: <SinglePageError />,
   },
 ]);
 

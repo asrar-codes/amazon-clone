@@ -17,11 +17,11 @@ const Carousel = () => {
         {slick.map((slide) => {
           const { id, name, image } = slide;
           return (
-            <div key={id} className="slide ">
+            <div key={id} className="slide">
               <img
                 src={image}
                 alt={name}
-                className="slide-image w-full mx-auto object-cover rounded-lg"
+                className="slide-image w-full object-cover  max-h-screen mx-auto rounded-lg"
               />
             </div>
           );

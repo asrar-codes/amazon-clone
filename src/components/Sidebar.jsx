@@ -1,8 +1,6 @@
-import React, { useEffect } from "react";
 import { useGlobalContext } from "../context/context";
-import { FaTimes } from "react-icons/fa";
-import { CgProfile } from "react-icons/cg";
 import { NavLink } from "react-router-dom";
+import { navLinks } from "../utils/NavLinks";
 
 const Sidebar = () => {
   const show__sidebar =
@@ -19,42 +17,21 @@ const Sidebar = () => {
           className="flex  flex-col nav-links w-10/12  justify-center gap-2 mx-2 capitalize children:cursor-pointer "
           onClick={hideSidebar}
         >
-          <li>
-            <NavLink
-              to="/"
-              className={({ isActive }) => (isActive ? "link active" : "link")}
-              end
-            >
-              Home
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="products"
-              className={({ isActive }) => (isActive ? "link active" : "link")}
-              end
-            >
-              Products
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="cart"
-              className={({ isActive }) => (isActive ? "link active" : "link")}
-              end
-            >
-              Cart
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="about"
-              className={({ isActive }) => (isActive ? "link active" : "link")}
-              end
-            >
-              About
-            </NavLink>
-          </li>
+          {navLinks.map((link) => {
+            return (
+              <li key={link.id}>
+                <NavLink
+                  to={link.url}
+                  className={({ isActive }) =>
+                    isActive ? "link active" : "link"
+                  }
+                  end
+                >
+                  {link.text}
+                </NavLink>
+              </li>
+            );
+          })}
         </ul>
       </section>
     </>

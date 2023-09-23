@@ -1,13 +1,11 @@
-import React from "react";
 import { useRouteError } from "react-router-dom";
 
 const SinglePageError = () => {
   const error = useRouteError();
-  console.log(error);
   return (
-    <div>
-      <p>{error.message}</p>
-    </div>
+    <section>
+      <p className="text-xl font-semibold">{error.message}</p>
+    </section>
   );
 };
 

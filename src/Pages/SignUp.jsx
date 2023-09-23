@@ -5,18 +5,19 @@ import { Link } from "react-router-dom";
 
 const SignUp = () => {
   return (
-    <form className="form w-11/12 max-w-xl mx-auto mt-20 border-red-300">
+    <form className="form w-11/12  max-w-xl mx-auto mt-20 shadow-sm shadow-gray-300 border-red-300">
       <div className="form-header text-center"></div>
-      <section className="form-container flex flex-col gap-5 border-2 border-gray-300 p-6 rounded-lg shadow-mainShadow">
+      <section className="form-container flex flex-col gap-5 border-2 border-gray-300 p-6 rounded-lg ">
         <p className="text-3xl font-semibold text-center">Register</p>
-        <label htmlFor="email" className="flex flex-col">
-          username
+        <label htmlFor="name" className="flex flex-col">
+          Username
           <input
-            type="email"
-            name="email"
-            id="email"
+            type="text"
+            name="name"
+            id="name"
             className="p-1 border-2   outline-slate-400"
-            required
+            autoComplete="current-name"
+            aria-required="true"
           />
         </label>
         <label htmlFor="email" className="flex flex-col">
@@ -26,7 +27,8 @@ const SignUp = () => {
             name="email"
             id="email"
             className="p-1  border-2   outline-slate-400"
-            required
+            autoComplete="current-email"
+            aria-required="true"
           />
         </label>
         <label htmlFor="password" className="flex flex-col" aria-required>
@@ -36,6 +38,8 @@ const SignUp = () => {
             name="password"
             id="password"
             className="p-1  border-2 outline-slate-400"
+            autoComplete="current-password"
+            aria-required="true"
           />
         </label>
 

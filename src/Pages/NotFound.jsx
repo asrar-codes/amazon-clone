@@ -2,7 +2,7 @@ import { Link, useRouteError } from "react-router-dom";
 import notFoundSvg from "../assets/notFound.svg";
 const NotFound = () => {
   const error = useRouteError();
-  if (error.status === 404) {
+  if (error && error.status === 404) {
     return (
       <section className="page text-center grid grid-cols-2">
         <div>
@@ -20,7 +20,11 @@ const NotFound = () => {
       </section>
     );
   }
-  return <h3>{error.message}</h3>;
+  return (
+    <section className="page">
+      <h3>Error: {error.message}</h3>
+    </section>
+  );
 };
 
 export default NotFound;
