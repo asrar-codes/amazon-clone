@@ -1,17 +1,10 @@
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useReducer,
-  useRef,
-} from "react";
+import React, { createContext, useContext, useReducer, useRef } from "react";
 import { carouselData } from "../assets/carouselData";
 import reducer from "../reducer";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase/firebase";
-import { SingleProduct } from "../Pages";
 
-const products_url = `https://strapi-store-server.onrender.com/api/products`;
+// const products_url = `https://strapi-store-server.onrender.com/api/products`;
 
 /*
 
@@ -19,7 +12,7 @@ const products_url = `https://strapi-store-server.onrender.com/api/products`;
  */
 
 const defaultState = {
-  index: 0,
+  products: [],
   isSidebarOpen: false,
   slick: carouselData,
   isDarkMode: false,
@@ -28,6 +21,7 @@ const defaultState = {
 const AppContext = createContext();
 export const ContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, defaultState);
+
   const formRef = useRef(null);
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
@@ -58,24 +52,9 @@ export const ContextProvider = ({ children }) => {
   };
   /*
 
-  >>======= set page no
- */
-  const handlePageNo = (id) => {
-    dispatch({ type: "HANDLE_PAGE_NO", payload: id });
-  };
-  /*
-
-  >>======= fetch page no
+  >>======= Fetch Page no
  */
 
-  const fetchPage = async (pageNo) => {
-    const response = await fetch(`${products_url}?page=${state.index}`);
-    const data = await response.data;
-    // console.log(response.data);
-  };
-  useEffect(() => {
-    fetchPage(state.index);
-  }, [state.index]);
   return (
     <AppContext.Provider
       value={{
@@ -87,7 +66,6 @@ export const ContextProvider = ({ children }) => {
         formRef,
         emailRef,
         passwordRef,
-        handlePageNo,
       }}
     >
       {children}

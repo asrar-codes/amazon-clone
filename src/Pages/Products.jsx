@@ -1,43 +1,75 @@
-import { useLoaderData } from "react-router-dom";
-import { SingleProduct } from "../components";
+import {
+  useLoaderData,
+  useNavigate,
+  useSearchParams,
+  createSearchParams,
+} from "react-router-dom";
+import { Filters, ProductsContainer } from "../components";
+// import { useGlobalContext } from "../context/context";
+// import { BsCheckLg } from "react-icons/bs";
+import { useState } from "react";
+import { customFetch } from "../utils/customFetch";
 import { useGlobalContext } from "../context/context";
-import axios from "axios";
-const products_url = "https://strapi-store-server.onrender.com/api/products";
 
 let noOfPages;
+let search = "";
 export const loader = async () => {
-  const { data } = await axios.get(products_url);
-  // console.log(data);
+  console.log(search);
+  const { data } = await customFetch.get(`/products${search}`);
+  console.log(data);
   noOfPages = data.meta.pagination.pageCount;
-  return { products: data.data, noOfPages };
+
+  // console.log(data);
+  return {
+    products: data.data,
+    noOfPages,
+    companies: data.meta.companies,
+    categories: data.meta.categories,
+  };
 };
 
 const Products = () => {
-  const { products, noOfPages } = useLoaderData();
-  const { index, handlePageNo } = useGlobalContext();
-  const btnArr = Array.from({ length: noOfPages }, (_, i) => i);
-  // console.log(btnArr);
+  const { isDarkMode } = useGlobalContext();
+  const navigate = useNavigate();
+  const { noOfPages } = useLoaderData();
+  const btnArr = Array.from({ length: noOfPages }, (_, i) => i + 1);
+  const [pageIndex, setPageIndex] = useState(1);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const handlePageChange = (pageNumber) => {
+    // console.log(pageNumber);
+    setSearchParams({ page: `${pageNumber}` });
+    search = `?page=${pageNumber}`;
+    setPageIndex(pageNumber);
+
+    navigate(`/products${search}`);
+  };
 
   return (
-    <div className="p-10">
-      <section className="w-11/12 products-container mx-auto mt-20 grid gap-8 grid-cols-productsGrid">
-        {products.map((product) => {
-          return <SingleProduct key={product.id} {...product} />;
-        })}
-      </section>
-      <section className="pagination flex justify-end">
-        <div className="button-container w-1/5 flex gap-6 text-xl bg-slate-100   p-2 rounded-lg">
-          {btnArr.map((item, id) => {
+    <div className="w-11/12 mx-auto">
+      <Filters />
+
+      <ProductsContainer />
+
+      <section className="pagination mt-12 flex justify-end">
+        <div
+          className={`${
+            isDarkMode ? "bg-gray-900 text-white" : "bg-slate-100"
+          } button-container w-1/5 flex gap-6 text-xl    p-2 rounded-lg`}
+        >
+          {btnArr.map((btnNo) => {
             return (
               <button
-                key={id}
-                onClick={() => handlePageNo(id)}
+                key={btnNo}
+                onClick={() => handlePageChange(btnNo)}
                 type="button"
                 className={`${
-                  index === id ? "text-red-700 bg-slate-300 rounded p-1" : ""
+                  pageIndex === btnNo
+                    ? "text-red-700 bg-slate-300 rounded p-1"
+                    : ""
                 } p-1 `}
               >
-                {id + 1}
+                {btnNo}
               </button>
             );
           })}

@@ -29,6 +29,7 @@ const router = createBrowserRouter([
         index: true,
         element: <Home />,
         loader: fetchFeaturedProductsLoader,
+
         errorElement: <SinglePageError />,
       },
       {

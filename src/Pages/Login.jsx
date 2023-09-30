@@ -75,7 +75,7 @@ const Login = () => {
         <LoginBtn
           text=" Sign In"
           clickFunction={singIn}
-          background="bg-blue-500"
+          background="bg-violet-500"
         />
         <LoginBtn
           text="continue with google"

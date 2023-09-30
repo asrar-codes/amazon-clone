@@ -7,8 +7,18 @@ const reducer = (state, action) => {
       return { ...state, isSidebarOpen: !state.isSidebarOpen };
     case "TOGGLE_DARK_MODE":
       return { ...state, isDarkMode: !state.isDarkMode };
-    case "HANDLE_PAGE_NO":
+
+    case "SET_PRODUCTS":
+      return { ...state, products: action.payload };
+    case "FETCH_PAGE_WISE_SUCCESS":
       return { ...state, index: action.payload };
+    case "HANDLE_SEARCH_PARAMS":
+      search = `?page=${pageNumber}`;
+      return {
+        ...state,
+        index: action.payload,
+        search: `?page=${action.payload}`,
+      };
 
     default:
       throw new Error(`you're not handling a dispatch: ${action.type}`);
