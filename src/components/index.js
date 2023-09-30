@@ -6,3 +6,7 @@ export { default as LoginBtn } from "./LoginBtn";
 export { default as Navbar } from "./Navbar";
 export { default as Sidebar } from "./Sidebar";
 export { default as SingleProduct } from "./SingleProduct";
+export { default as Filters } from "./Filters";
+export { default as Select } from "./Select";
+export { default as ProductsContainer } from "./ProductsContainer";
+export { default as Loading } from "./Loading";

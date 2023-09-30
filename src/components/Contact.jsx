@@ -2,10 +2,12 @@ import { useForm, ValidationError } from "@formspree/react";
 import Emailvalidation from "@everapi/emailvalidation-js";
 import { useState, useRef } from "react";
 import { toast } from "react-toastify";
+import { useGlobalContext } from "../context/context";
 
 const Contact = () => {
   const [state, handleSubmit] = useForm("xbjvleka");
   const [isEmailValid, setIsEmailValid] = useState(false);
+  const { isDarkMode } = useGlobalContext();
 
   const emailRef = useRef();
 
@@ -61,7 +63,9 @@ const Contact = () => {
                 id="email"
                 type="email"
                 name="email"
-                className=" p-1 text-lg  border border-slate-600 rounded-md"
+                className={` ${
+                  isDarkMode ? "bg-gray-700 text-white" : "border-slate-600 "
+                }p-1 text-lg  border rounded-md`}
                 placeholder="Enter your email"
                 autoComplete="current-email"
                 ref={emailRef}

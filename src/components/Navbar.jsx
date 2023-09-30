@@ -18,14 +18,14 @@ const Navbar = () => {
   }, [isDarkMode]);
   return (
     <>
-      <nav className="flex justify-between items-center py-2 relative  text-white bg-slate-700  ">
+      <nav className="flex justify-between items-center py-2 relative  text-white bg-slate-700   ">
         <button
           className="block p-1 rounded-lg sm:hidden"
           onClick={toggleSidebar}
         >
           <FaBars />
         </button>
-        <p className="hidden sm:block text-4xl border p-1 ml-2 ">BoxSpace</p>
+        <p className="hidden sm:block text-4xl border p-1 ml-4">BoxSpace</p>
         <ul className="hidden sm:flex nav-links w-10/12  justify-center gap-4 mx-4 capitalize children:cursor-pointer ">
           {navLinks.map((link) => {
             return (
@@ -43,18 +43,18 @@ const Navbar = () => {
             );
           })}
         </ul>
-        <div className="flex utils items-center gap-4 mr-2 ">
+        <div className="flex utils w-max items-center gap-4 mr-4 ">
           <p
             className="darkmode cursor-pointer text-xl"
             onClick={toggleDarkMode}
           >
             {isDarkMode ? <FaSun /> : <FaMoon />}
           </p>
-          <Link to="login" className="darkmode">
+          <Link to="login" className="">
             Login
           </Link>
-          <Link to="signup" className="darkmode">
-            Singup
+          <Link to="signup" className="w-max ">
+            Sign up
           </Link>
         </div>
       </nav>

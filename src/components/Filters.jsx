@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import Select from "./Select";
-import { confirmPasswordReset } from "firebase/auth";
-import { Login } from "../Pages";
 import LoginBtn from "./LoginBtn";
 import { formatPrice } from "../utils/formatPrice";
+import { useGlobalContext } from "../context/context";
 
 const Filters = () => {
   const { companies, categories } = useLoaderData();
+  const { isDarkMode } = useGlobalContext();
   // console.log(companies, categories);
   const [range, setRange] = useState(0);
   const [freeShipping, setFreeShipping] = useState(false);
@@ -16,38 +16,42 @@ const Filters = () => {
   const handleSearch = () => {};
   const handleReset = () => {};
   return (
-    <section className="filters w-11/12 mx-auto p-6 bg-slate-200 rounded-lg">
-      <div className="input-container grid grid-cols-4 justify-around gap-6">
-        <div className="flex flex-col gap-1">
-          <label htmlFor="search" className="capitalize ">
+    <section
+      className={` ${
+        isDarkMode ? "bg-gray-900 text-white" : "bg-slate-200"
+      } filters mt-8 mx-auto px-6 py-6  rounded-lg `}
+    >
+      <div className="input-container w-full grid  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="flex flex-col gap-1 ">
+          <label htmlFor="search" className="capitalize">
             search product
           </label>
           <input
-            type="text"
-            className="p-1 border outline-none border-slate-500 rounded-lg"
+            type="search"
+            name="search"
+            className={`${
+              isDarkMode && " bg-gray-600 text-white"
+            } p-1 border outline-none border-slate-500 rounded-lg`}
             id="search"
           />
         </div>
         <div className="flex flex-col gap-1">
-          <label htmlFor="" className="capitalize">
-            select category
-          </label>
-          <Select options={categories} />
+          <Select
+            label={"select category"}
+            name="categories"
+            options={categories}
+          />
         </div>
         <div className="flex flex-col gap-1">
-          <label htmlFor="" className="capitalize">
-            select company
-          </label>
-          <Select options={companies} />
+          <Select
+            label={"select company"}
+            name={"categories"}
+            options={companies}
+          />
         </div>
         <div className="flex flex-col gap-1">
-          <label htmlFor="" className="capitalize">
-            sort by
-          </label>
-          <Select options={sortArr} />
+          <Select label={"sort by"} name={"sort"} options={sortArr} />
         </div>
-      </div>
-      <div className="button-container grid grid-cols-4 justify-around items-center  gap-6  mt-8">
         <div className="flex flex-col gap-1">
           <label htmlFor="file " className="flex capitalize justify-between">
             select price:
@@ -55,11 +59,11 @@ const Filters = () => {
           </label>
           <input
             type="range"
-            name="price"
-            min="0"
-            max="100000"
-            className="cursor-pointer"
-            step="1000"
+            name="range"
+            min={0}
+            max={100000}
+            className={` "cursor-pointer"`}
+            step={1000}
             value={range}
             onChange={(e) => setRange(parseInt(e.target.value))}
           />
@@ -70,10 +74,11 @@ const Filters = () => {
           </label>
           <input
             type="checkbox"
-            name="price"
+            name="free shipping"
             className="w-6 h-6  select-none bg-purple-500 cursor-pointer checked:bg-slate-600  rounded-[50%]"
             value={freeShipping}
             onChange={() => setFreeShipping(!freeShipping)}
+            id="checkbox"
           />
         </div>
         <div>
