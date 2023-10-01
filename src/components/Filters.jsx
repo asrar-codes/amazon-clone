@@ -1,17 +1,19 @@
 import React, { useState } from "react";
-import { useLoaderData } from "react-router-dom";
+import { Form, useLoaderData } from "react-router-dom";
 import Select from "./Select";
 import LoginBtn from "./LoginBtn";
 import { formatPrice } from "../utils/formatPrice";
 import { useGlobalContext } from "../context/context";
 
 const Filters = () => {
-  const { companies, categories } = useLoaderData();
+  const { companies, categories, params } = useLoaderData();
   const { isDarkMode } = useGlobalContext();
   // console.log(companies, categories);
-  const [range, setRange] = useState(0);
   const [freeShipping, setFreeShipping] = useState(false);
   const sortArr = ["a-z", "z-a", "high", "low"];
+  const { search, category, company, sort, price, shipping } = params;
+  const maxPrice = 100000;
+  const [inputRange, setInputRange] = useState(price || maxPrice);
 
   const handleSearch = () => {};
   const handleReset = () => {};
@@ -21,7 +23,7 @@ const Filters = () => {
         isDarkMode ? "bg-gray-900 text-white" : "bg-slate-200"
       } filters mt-8 mx-auto px-6 py-6  rounded-lg `}
     >
-      <div className="input-container w-full grid  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <Form className="input-container w-full grid  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         <div className="flex flex-col gap-1 ">
           <label htmlFor="search" className="capitalize">
             search product
@@ -33,39 +35,47 @@ const Filters = () => {
               isDarkMode && " bg-gray-600 text-white"
             } p-1 border outline-none border-slate-500 rounded-lg`}
             id="search"
+            defaultValue={search}
           />
         </div>
         <div className="flex flex-col gap-1">
           <Select
             label={"select category"}
-            name="categories"
+            name="category"
             options={categories}
+            defaultValue={category}
           />
         </div>
         <div className="flex flex-col gap-1">
           <Select
             label={"select company"}
-            name={"categories"}
+            name={"company"}
             options={companies}
+            defaultValue={company}
           />
         </div>
         <div className="flex flex-col gap-1">
-          <Select label={"sort by"} name={"sort"} options={sortArr} />
+          <Select
+            label={"sort by"}
+            name={"order"}
+            options={sortArr}
+            defaultValue={sort}
+          />
         </div>
         <div className="flex flex-col gap-1">
           <label htmlFor="file " className="flex capitalize justify-between">
             select price:
-            <span className="justify-center">{formatPrice(range)}</span>
+            <span className="justify-center">{formatPrice(inputRange)}</span>
           </label>
           <input
             type="range"
-            name="range"
+            name="price"
             min={0}
             max={100000}
             className={` "cursor-pointer"`}
             step={1000}
-            value={range}
-            onChange={(e) => setRange(parseInt(e.target.value))}
+            value={inputRange}
+            onChange={(e) => setInputRange(parseInt(e.target.value))}
           />
         </div>
         <div className="flex flex-col gap-1 items-center">
@@ -74,10 +84,9 @@ const Filters = () => {
           </label>
           <input
             type="checkbox"
-            name="free shipping"
+            name="shipping"
             className="w-6 h-6  select-none bg-purple-500 cursor-pointer checked:bg-slate-600  rounded-[50%]"
-            value={freeShipping}
-            onChange={() => setFreeShipping(!freeShipping)}
+            defaultChecked={shipping}
             id="checkbox"
           />
         </div>
@@ -95,7 +104,7 @@ const Filters = () => {
             background={"bg-violet-500"}
           />
         </div>
-      </div>
+      </Form>
     </section>
   );
 };

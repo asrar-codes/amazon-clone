@@ -1,7 +1,7 @@
 import React from "react";
 import { useGlobalContext } from "../context/context";
 
-const Select = ({ label, name, options }) => {
+const Select = ({ label, name, options, defaultValue }) => {
   const { isDarkMode } = useGlobalContext();
   return (
     <>
@@ -14,6 +14,7 @@ const Select = ({ label, name, options }) => {
           isDarkMode && " bg-gray-600 text-white"
         } border p-1  outline-none cursor-pointer  border-slate-500 rounded-lg`}
         name={name}
+        defaultValue={defaultValue}
         id={name}
       >
         {options.map((option) => {

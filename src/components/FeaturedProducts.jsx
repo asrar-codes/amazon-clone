@@ -11,19 +11,19 @@ const FeaturedProducts = () => {
         Featured Products
       </h2>
       <hr className="mt-4 bg-slate-500 opacity-100" />
-      <div className="flex mt-8 p-3 gap-8  ">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-8 p-3 gap-4  ">
         {products.map((product) => {
           const { title, image, price } = product.attributes;
           return (
             <Link
               key={product.id}
               to={`/products/${product.id}`}
-              className="text-center shadow-md shadow-gray-300 p-4 rounded-lg"
+              className="text-center shadow-md  shadow-gray-300 p-4 rounded-lg "
             >
               <img
                 src={image}
                 alt={title}
-                className="w-72 h-40 object-cover rounded-lg"
+                className="w-72 mx-auto h-40 object-cover rounded-lg"
               />
               <p className="font-semibold text-2xl capitalize mt-3">{title}</p>
               <p className="text-lg">{formatPrice(price)}</p>

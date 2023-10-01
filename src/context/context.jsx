@@ -12,6 +12,7 @@ import { auth } from "../firebase/firebase";
  */
 
 const defaultState = {
+  pageIndex: 1,
   products: [],
   isSidebarOpen: false,
   slick: carouselData,

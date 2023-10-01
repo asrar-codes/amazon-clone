@@ -58,7 +58,7 @@ const Contact = () => {
             onSubmit={isEmailValid ? handleSubmit : handleClick}
             className="p-4"
           >
-            <div className="display flex flex-wrap gap-4">
+            <div className="display flex flex-wrap justify-center sm:justify-normal gap-4">
               <input
                 id="email"
                 type="email"
@@ -80,7 +80,7 @@ const Contact = () => {
               <button
                 type="submit"
                 disabled={state.submitting}
-                className="p-1 text-lg bg-slate-600 rounded-md"
+                className="p-1 text-lg text-white bg-slate-600 rounded-md"
               >
                 {state.submitting ? "submitting" : "submit"}
               </button>

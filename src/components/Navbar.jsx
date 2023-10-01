@@ -18,12 +18,12 @@ const Navbar = () => {
   }, [isDarkMode]);
   return (
     <>
-      <nav className="flex justify-between items-center py-2 relative  text-white bg-slate-700   ">
+      <nav className="flex justify-between items-center py-3 relative text-2xl sm:text-lg text-white bg-slate-700 sm:py-2 ">
         <button
           className="block p-1 rounded-lg sm:hidden"
           onClick={toggleSidebar}
         >
-          <FaBars />
+          <FaBars className="" />
         </button>
         <p className="hidden sm:block text-4xl border p-1 ml-4">BoxSpace</p>
         <ul className="hidden sm:flex nav-links w-10/12  justify-center gap-4 mx-4 capitalize children:cursor-pointer ">

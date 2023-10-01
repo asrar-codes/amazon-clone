@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useLoaderData } from "react-router-dom";
+import { formatPrice } from "../utils/formatPrice";
 
 const ProductsList = () => {
   const { products } = useLoaderData();
@@ -29,7 +30,9 @@ const ProductsList = () => {
               </h4>
             </div>
             <div className="justify-self-center">
-              <p className="text-lg font-semibold">$ {attributes.price}</p>
+              <p className="text-lg font-semibold">
+                {formatPrice(attributes.price)}
+              </p>
             </div>
           </Link>
         );
