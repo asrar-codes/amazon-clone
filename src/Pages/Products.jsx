@@ -51,7 +51,7 @@ const Products = () => {
 
       <ProductsContainer />
 
-      <section className="pagination mt-12 flex justify-center ">
+      <section className="pagination mt-12 flex justify-center sm:justify-end ">
         <div
           className={`${
             isDarkMode ? "bg-gray-900 text-white" : "bg-slate-100"
@@ -67,7 +67,7 @@ const Products = () => {
                   pageIndex === btnNo
                     ? "text-red-700 bg-slate-300 rounded p-1"
                     : ""
-                } justify-self-center p-1 `}
+                }  p-1 `}
               >
                 {btnNo}
               </button>
