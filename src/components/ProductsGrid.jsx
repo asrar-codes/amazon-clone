@@ -5,14 +5,14 @@ import { formatPrice } from "../utils/formatPrice";
 const ProductsGrid = () => {
   const { products } = useLoaderData();
   return (
-    <section className="w-11/12 mx-auto mt-20 grid gap-8 grid-cols-productsGrid">
+    <section className="w-11/12 mx-auto mt-20 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
       {products.map((product) => {
         const { attributes } = product;
         return (
           <Link
             key={product.id}
             to={`/products/${product.id}`}
-            className="single-product w-full p-4 text-center  bg-grey shadow-mainShadow  rounded-xl"
+            className="single-product w-full p-4 text-center  bg-grey shadow-md  rounded-xl"
           >
             <div className="img-container ">
               <img

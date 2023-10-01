@@ -12,25 +12,25 @@ const ProductsList = () => {
           <Link
             key={product.id}
             to={`/products/${product.id}`}
-            className="single-product mx-auto p-6 grid gap-4 justify-center grid-rows-1 shadow-mainShadow  rounded-xl sm:w-full md:grid-cols-3  "
+            className="single-product mx-auto p-4 grid gap-4 justify-center grid-rows-1 shadow-md  rounded-xl sm:w-full sm:grid-cols-3 "
           >
-            <div className="img-container justify-self-center sm:w-9/12">
+            <div className="img-container  sm:full">
               <img
                 src={attributes.image}
                 alt={attributes.title}
-                className=" w-[250px]  h-[170px] bg-cover rounded-lg  "
+                className=" w-[250px]  h-[170px] object-cover rounded-lg  "
               />
             </div>
-            <div className="desc justify-self-center">
-              <h4 className="text-xl capitalize font-semibold ">
+            <div className="desc justify-self-center ">
+              <h4 className="text-xl w-max capitalize font-medium ">
                 {attributes.title}
               </h4>
-              <h4 className="text-lg capitalize text-center font-semibold text-gray-500 ">
+              <h4 className="text-lg capitalize text-center sm:text-start  font-semibold text-gray-500 ">
                 {attributes.company}
               </h4>
             </div>
             <div className="justify-self-center">
-              <p className="text-lg font-semibold">
+              <p className="text-lg font-medium">
                 {formatPrice(attributes.price)}
               </p>
             </div>
