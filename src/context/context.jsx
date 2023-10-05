@@ -10,13 +10,17 @@ import { auth } from "../firebase/firebase";
 
   >>======= Loaders 
  */
+localStorage.getItem("theme")
+  ? localStorage.getItem("theme")
+  : localStorage.setItem("theme", JSON.stringify({ dark: false }));
 
 const defaultState = {
   pageIndex: 1,
   products: [],
+  cartProducts: [],
   isSidebarOpen: false,
   slick: carouselData,
-  isDarkMode: false,
+  isDarkMode: JSON.parse(localStorage.getItem("theme")).dark || false,
 };
 
 const AppContext = createContext();
@@ -53,8 +57,17 @@ export const ContextProvider = ({ children }) => {
   };
   /*
 
-  >>======= Fetch Page no
+  >>======= Add to Cart
  */
+
+  const addToCart = (cartItem, itemColor, itemAmount) => {
+    // console.log(id);
+
+    dispatch({
+      type: "ADD_TO_CART",
+      payload: { cartItem, itemColor, itemAmount },
+    });
+  };
 
   return (
     <AppContext.Provider
@@ -67,6 +80,7 @@ export const ContextProvider = ({ children }) => {
         formRef,
         emailRef,
         passwordRef,
+        addToCart,
       }}
     >
       {children}
