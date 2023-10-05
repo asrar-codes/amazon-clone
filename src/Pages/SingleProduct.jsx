@@ -1,16 +1,19 @@
 import { customFetch } from "../utils/customFetch";
 import { useLoaderData } from "react-router-dom";
 import { formatPrice } from "../utils/formatPrice";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { useGlobalContext } from "../context/context";
 
 export const loader = async ({ params }) => {
   const { id } = params;
   const { data } = await customFetch.get(`products/${id}`);
 
-  return { product: data.data };
+  return { product: data.data, id };
 };
 const SingleProduct = () => {
-  const { product } = useLoaderData();
+  const { product, id } = useLoaderData();
+  const { addToCart } = useGlobalContext();
+  const amountRef = useRef();
 
   const newProduct = product.attributes;
   const {
@@ -42,7 +45,6 @@ const SingleProduct = () => {
         <p className="text-2xl mt-10">Colors:</p>
         <div className="colors mt-4  flex gap-4">
           {colors.map((color) => {
-            console.log(color, stateColor);
             return (
               <button
                 type="button"
@@ -57,14 +59,19 @@ const SingleProduct = () => {
           })}
         </div>
         <p className="text-2xl">Amount</p>
-        <select className="amount w-20 border rounded-md">
+        <select ref={amountRef} className="amount w-20 border rounded-md">
           <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
           <option value="4">4</option>
           <option value="5">5</option>
         </select>
-        <button className="p-2 mt-8 block text-2xl text-white  bg-slate-700 capitalize rounded-lg border-slate-700">
+        <button
+          onClick={() =>
+            addToCart(product, stateColor, amountRef.current.value)
+          }
+          className="p-2 mt-8 block text-2xl text-white  bg-slate-700 capitalize rounded-lg border-slate-700"
+        >
           Add to cart
         </button>
       </div>

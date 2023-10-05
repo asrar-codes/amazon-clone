@@ -18,7 +18,7 @@ const ProductsList = () => {
               <img
                 src={attributes.image}
                 alt={attributes.title}
-                className=" w-[250px]  h-[170px] object-cover rounded-lg  "
+                className=" w-[250px]  h-[170px] object-cover rounded-lg"
               />
             </div>
             <div className="desc justify-self-center ">

@@ -34,7 +34,7 @@ export const loader = async ({ request }) => {
 const Products = () => {
   const { isDarkMode } = useGlobalContext();
   const { noOfPages, products, params } = useLoaderData();
-  console.log(noOfPages);
+  // console.log(noOfPages);
   const [pageIndex, setPageIndex] = useState(parseInt(params.page) || 1);
   const btnArr = Array.from({ length: noOfPages }, (_, i) => i + 1);
   const [searchParams, setSearchParams] = useSearchParams();

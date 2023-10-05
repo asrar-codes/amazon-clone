@@ -9,10 +9,15 @@ const Navbar = () => {
 
   useEffect(() => {
     if (isDarkMode) {
-      document.body.classList.add("dark:bg-slate-800", "text-white");
+      document.documentElement.classList.add("dark:bg-slate-800", "text-white");
+      localStorage.setItem("theme", JSON.stringify({ dark: true }));
       return;
     } else {
-      document.body.classList.remove("dark:bg-slate-800", "text-white");
+      document.documentElement.classList.remove(
+        "dark:bg-slate-800",
+        "text-white"
+      );
+      localStorage.setItem("theme", JSON.stringify({ dark: false }));
       return;
     }
   }, [isDarkMode]);

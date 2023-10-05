@@ -8,7 +8,7 @@ let noOfPages;
 export const loader = async () => {
   const { data } = await customFetch(`${products_url}`);
 
-  console.log(data.data);
+  // console.log(data.data);
   // index = response.meta.pagination.pageCount
   // console.log(data);
   noOfPages = data.meta.pagination.pageCount;
@@ -18,6 +18,7 @@ export const loader = async () => {
 const SharedLayout = () => {
   const navigation = useNavigation();
   const isPageLoading = navigation.state === "loading";
+
   return (
     <>
       <Navbar />

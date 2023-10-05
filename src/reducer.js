@@ -1,3 +1,5 @@
+import { toast } from "react-toastify";
+
 const reducer = (state, action) => {
   switch (action.type) {
     case "TOGGLE_SIDEBAR":
@@ -8,16 +10,42 @@ const reducer = (state, action) => {
     case "TOGGLE_DARK_MODE":
       return { ...state, isDarkMode: !state.isDarkMode };
 
-    case "SET_PRODUCTS":
-      return { ...state, products: action.payload };
-    case "FETCH_PAGE_WISE_SUCCESS":
-      return { ...state, index: action.payload };
-    case "HANDLE_SEARCH_PARAMS":
-      search = `?page=${pageNumber}`;
+    case "ADD_TO_CART":
+      toast.success("Item Added To Cart");
+      // console.log(first)
+
+      // console.log(state.cartProducts);
+
+      const sameProduct = state.cartProducts.find(
+        (item) =>
+          item.cartItem.id == action.payload.cartItem.id &&
+          item.itemColor === action.payload.itemColor
+      );
+      // console.log(sameProduct);
+      // console.log(newProduct);
+      if (sameProduct) {
+        const newProducts = state.cartProducts.map((item) => {
+          if (
+            item.cartItem.id == action.payload.cartItem.id &&
+            item.itemColor === action.payload.itemColor
+          ) {
+            return {
+              ...item,
+              itemAmount:
+                parseInt(item.itemAmount) + parseInt(action.payload.itemAmount),
+            };
+          }
+          return item;
+        });
+        return {
+          ...state,
+          cartProducts: newProducts,
+        };
+      }
+
       return {
         ...state,
-        index: action.payload,
-        search: `?page=${action.payload}`,
+        cartProducts: [...state.cartProducts, action.payload],
       };
 
     default:
