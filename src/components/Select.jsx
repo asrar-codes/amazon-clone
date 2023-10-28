@@ -1,8 +1,9 @@
-import React from "react";
+import { useRef } from "react";
 import { useGlobalContext } from "../context/context";
 
 const Select = ({ label, name, options, defaultValue }) => {
   const { isDarkMode } = useGlobalContext();
+
   return (
     <>
       <label htmlFor={name} className="capitalize">
@@ -11,7 +12,7 @@ const Select = ({ label, name, options, defaultValue }) => {
 
       <select
         className={`${
-          isDarkMode && " bg-gray-600 text-white"
+          isDarkMode.dark && " bg-gray-600 text-white"
         } border p-1  outline-none cursor-pointer  border-slate-500 rounded-lg`}
         name={name}
         defaultValue={defaultValue}

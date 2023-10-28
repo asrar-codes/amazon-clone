@@ -1,47 +1,51 @@
-import React from "react";
+import React, { useContext } from "react";
 import LoginBtn from "../components/LoginBtn";
 LoginBtn;
-import { Link } from "react-router-dom";
+import { Form, Link, redirect, useActionData } from "react-router-dom";
+import { LoginInput } from "../components";
+import { auth } from "../firebase/firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { useGlobalContext } from "../context/context";
+
+export const action = async ({ request }) => {
+  // const response = await createUserWithEmailAndPassword(auth);
+  const formData = await request.formData();
+  // console.log(formData);
+  const data = Object.fromEntries(formData);
+  // console.log(data);
+  let user;
+  try {
+    const response = await createUserWithEmailAndPassword(
+      auth,
+      data.email,
+      data.password
+    );
+    // console.log(response);
+    user = response.user;
+    console.log(user);
+  } catch (error) {
+    console.log(error);
+  }
+  redirect("/");
+  return user;
+};
 
 const SignUp = () => {
+  const data = useActionData();
+  console.log(data);
+  const { formRef, emailRef, passwordRef } = useGlobalContext();
+
   return (
-    <form className="form w-11/12  max-w-xl mx-auto mt-20 shadow-sm shadow-gray-300 border-red-300">
+    <Form
+      method="POST"
+      className="form w-11/12  max-w-xl mx-auto mt-20 shadow-sm shadow-gray-300 border-red-300"
+    >
       <div className="form-header text-center"></div>
       <section className="form-container flex flex-col gap-5 border-2 border-gray-300 p-6 rounded-lg ">
         <p className="text-3xl font-semibold text-center">Register</p>
-        <label htmlFor="name" className="flex flex-col">
-          Username
-          <input
-            type="text"
-            name="name"
-            id="name"
-            className="p-1 border-2   outline-slate-400"
-            autoComplete="current-name"
-            aria-required="true"
-          />
-        </label>
-        <label htmlFor="email" className="flex flex-col">
-          Email
-          <input
-            type="email"
-            name="email"
-            id="email"
-            className="p-1  border-2   outline-slate-400"
-            autoComplete="current-email"
-            aria-required="true"
-          />
-        </label>
-        <label htmlFor="password" className="flex flex-col" aria-required>
-          Password
-          <input
-            type="password"
-            name="password"
-            id="password"
-            className="p-1  border-2 outline-slate-400"
-            autoComplete="current-password"
-            aria-required="true"
-          />
-        </label>
+        <LoginInput label={"username"} />
+        <LoginInput label={"email"} />
+        <LoginInput label={"password"} />
 
         <LoginBtn text="register" background="bg-blue-500" />
 
@@ -56,7 +60,7 @@ const SignUp = () => {
       {/* <button onClick={logout} className="btn">
         logout
       </button> */}
-    </form>
+    </Form>
   );
 };
 

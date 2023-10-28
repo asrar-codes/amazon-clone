@@ -61,7 +61,7 @@ const Products = () => {
         <Form className="pagination mt-12 flex justify-center sm:justify-end ">
           <div
             className={`${
-              isDarkMode ? "bg-gray-900 text-white" : "bg-slate-100"
+              isDarkMode.dark ? "bg-gray-900 text-white" : "bg-slate-100"
             } button-container w-1/5 flex gap-6 text-xl    p-2 rounded-lg`}
           >
             {btnArr.map((btnNo, id) => {

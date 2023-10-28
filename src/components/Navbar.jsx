@@ -1,26 +1,14 @@
 import React, { useEffect } from "react";
-import { FaBars, FaMoon, FaSun } from "react-icons/fa";
+import { FaBars, FaMoon, FaShoppingCart, FaSun } from "react-icons/fa";
 import { NavLink, Link } from "react-router-dom";
 import { useGlobalContext } from "../context/context";
 import { navLinks } from "../utils/NavLinks";
 
 const Navbar = () => {
-  const { toggleSidebar, isDarkMode, toggleDarkMode } = useGlobalContext();
+  const { toggleSidebar, isDarkMode, toggleDarkMode, noOfItemsInCart } =
+    useGlobalContext();
+  // console.log(noOfItemsInCart);
 
-  useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add("dark:bg-slate-800", "text-white");
-      localStorage.setItem("theme", JSON.stringify({ dark: true }));
-      return;
-    } else {
-      document.documentElement.classList.remove(
-        "dark:bg-slate-800",
-        "text-white"
-      );
-      localStorage.setItem("theme", JSON.stringify({ dark: false }));
-      return;
-    }
-  }, [isDarkMode]);
   return (
     <>
       <nav className="flex justify-between items-center py-3 relative text-2xl sm:text-lg text-white bg-slate-700 sm:py-2 ">
@@ -48,7 +36,13 @@ const Navbar = () => {
             );
           })}
         </ul>
-        <div className="flex utils w-max items-center gap-4 mr-4 ">
+        <div className="flex utils w-max items-center gap-6 lg:gap-8 mr-4 ">
+          <Link to="/cart" className="cursor-pointer flex relative ">
+            <FaShoppingCart className="text-2xl" />
+            <span className="absolute left-6 bottom-4 text-lg bg-violet-500 w-max h-min px-1 text-center rounded-[40%]">
+              {noOfItemsInCart}
+            </span>
+          </Link>
           <p
             className="darkmode cursor-pointer text-xl"
             onClick={toggleDarkMode}

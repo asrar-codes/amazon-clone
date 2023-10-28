@@ -13,38 +13,38 @@ const Contact = () => {
 
   const handleClick = async (e) => {
     e.preventDefault();
-    console.log(e);
+    // console.log(e);
+    console.log(import.meta.env.VITE_EMAILVALIDATION_KEY);
     const client = new Emailvalidation(
-      "ema_live_G1bTR7j9y33GdlZPraMhzEhb4gZv7StcqggQhZq1"
+      `${import.meta.env.VITE_EMAILVALIDATION_KEY}`
     );
 
     try {
       const response = await client.info(`${emailRef.current.value}`, {
         catch_all: 0,
       });
-      console.log(response);
-      console.log(state);
+      // console.log(response);
+      // console.log(state);
       if (response.state === "undeliverable") {
         toast.error("Please stop kidding and provide a valid email adress 😎");
         emailRef.current.focus();
         emailRef.current.value = "";
         setIsEmailValid(false);
+        return;
       } else if (response.state === "deliverable") {
         setIsEmailValid(true);
         toast.success("soon you will recieve the promised discount");
+        return;
       }
     } catch (error) {
       setIsEmailValid(false);
-      toast("something went wrong");
+      toast.error("something went wrong");
       console.log(error);
     }
   };
-
   return (
     <>
-      {isEmailValid ? (
-        <p>Thanks for joining</p>
-      ) : (
+      {!isEmailValid && (
         <section className="w-11/12 mx-auto p-4 ">
           <p className="text-xl font-bold tracking-wide">
             Join our newsletter and get 20% OFF
@@ -82,7 +82,7 @@ const Contact = () => {
                 disabled={state.submitting}
                 className="p-1 text-lg text-white bg-slate-600 rounded-md"
               >
-                {state.submitting ? "submitting" : "submit"}
+                {state.submitting ? "loading" : "submit"}
               </button>
             </div>
           </form>

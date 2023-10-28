@@ -9,8 +9,10 @@ import { auth } from "../firebase/firebase";
 import { googleProvider } from "../firebase/firebase";
 import { useNavigate } from "react-router-dom";
 import LoginBtn from "../components/LoginBtn";
+import { LoginInput } from "../components";
 const Login = () => {
-  const { logout, formRef, emailRef, passwordRef } = useGlobalContext();
+  const { logout, formRef, emailRef, isDarkMode, passwordRef } =
+    useGlobalContext();
   const navigate = useNavigate();
   const singIn = async (e) => {
     e.preventDefault();
@@ -48,29 +50,8 @@ const Login = () => {
       <div className="form-header text-center"></div>
       <section className="form-container flex flex-col gap-4 border-2 border-gray-300 p-6 rounded-lg ">
         <p className="text-3xl font-semibold text-center">Log in</p>
-        <label htmlFor="email" className="flex flex-col">
-          Email
-          <input
-            type="email"
-            name="email"
-            id="email"
-            className="p-1  border-2   outline-slate-400"
-            ref={emailRef}
-            autoComplete="current-email"
-            required
-          />
-        </label>
-        <label htmlFor="password" className="flex flex-col" aria-required>
-          Password
-          <input
-            type="password"
-            name="password"
-            id="password"
-            className="p-1 border-2 outline-slate-400"
-            ref={passwordRef}
-            autoComplete="current-password"
-          />
-        </label>
+        <LoginInput label={"email"} inputRefref={emailRef} />
+        <LoginInput label={"password"} inputRefref={passwordRef} />
 
         <LoginBtn
           text=" Sign In"

@@ -10,3 +10,5 @@ export { default as Filters } from "./Filters";
 export { default as Select } from "./Select";
 export { default as ProductsContainer } from "./ProductsContainer";
 export { default as Loading } from "./Loading";
+export { default as CartItem } from "./CartItem";
+export { default as LoginInput } from "./LoginInput";

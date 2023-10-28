@@ -32,6 +32,7 @@ const SingleProduct = () => {
     setStateColor(col);
     return;
   };
+
   return (
     <section className="w-11/12 mt-20 mx-auto grid grid-cols-productsGrid">
       <div className="img-container">
@@ -60,16 +61,27 @@ const SingleProduct = () => {
         </div>
         <p className="text-2xl">Amount</p>
         <select ref={amountRef} className="amount w-20 border rounded-md">
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
+          <option value={1}>1</option>
+          <option value={2}>2</option>
+          <option value={3}>3</option>
+          <option value={4}>4</option>
+          <option value={5}>5</option>
         </select>
         <button
-          onClick={() =>
-            addToCart(product, stateColor, amountRef.current.value)
-          }
+          onClick={() => {
+            const cartProduct = {
+              id: id + stateColor,
+              title,
+              company,
+              image,
+              category,
+              price,
+
+              itemColor: stateColor,
+              itemAmount: parseInt(amountRef.current.value),
+            };
+            addToCart(cartProduct);
+          }}
           className="p-2 mt-8 block text-2xl text-white  bg-slate-700 capitalize rounded-lg border-slate-700"
         >
           Add to cart

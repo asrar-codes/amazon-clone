@@ -20,7 +20,7 @@ const Filters = () => {
   return (
     <section
       className={` ${
-        isDarkMode ? "bg-gray-900 text-white" : "bg-slate-200"
+        isDarkMode.dark ? "bg-gray-900 text-white" : "bg-slate-200"
       } filters mt-8 mx-auto px-6 py-6  rounded-lg `}
     >
       <Form className="input-container w-full grid  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -32,7 +32,7 @@ const Filters = () => {
             type="search"
             name="search"
             className={`${
-              isDarkMode && " bg-gray-600 text-white"
+              isDarkMode.dark && " bg-gray-600 text-white"
             } p-1 border outline-none border-slate-500 rounded-lg`}
             id="search"
             defaultValue={search}
@@ -85,7 +85,9 @@ const Filters = () => {
           <input
             type="checkbox"
             name="shipping"
-            className="w-6 h-6  select-none bg-purple-500 cursor-pointer checked:bg-slate-600  rounded-[50%]"
+            className={`${
+              isDarkMode.dark && " text-blue-500 accent-gray-700 "
+            } w-6 h-6 p-1 border outline-none border-slate-500 rounded-lg`}
             defaultChecked={shipping}
             id="checkbox"
           />

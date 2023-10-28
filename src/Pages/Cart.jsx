@@ -1,57 +1,73 @@
 import React from "react";
 import { useGlobalContext } from "../context/context";
-import { Select } from "../components";
+import { CartItem, LoginBtn } from "../components";
 import { formatPrice } from "../utils/formatPrice";
+import { Link } from "react-router-dom";
 
 const Cart = () => {
-  const { cartProducts } = useGlobalContext();
-  return (
-    <section className="w-11/12 mx-auto">
-      <h1 className="font-medium text-2xl capitalize p-4">shopping cart</h1>
-      <hr />
-      {cartProducts.map((product) => {
-        const { title, company, image, price } = product.cartItem.attributes;
+  const { cartProducts, totalPriceOfCart, isDarkMode } = useGlobalContext();
+  // let totalPrice = 0;
+  const tax = (15 / 100) * totalPriceOfCart;
+  const shipping = 500;
+  const grandTotal = totalPriceOfCart + tax + shipping;
 
-        return (
-          <section
-            key={product.id}
-            className="p-4 flex flex-col sm:items-center gap-3 sm:grid sm:grid-cols-4 "
+  if (cartProducts.length < 1) {
+    return (
+      <section>
+        <h2>No items in the cart...</h2>
+      </section>
+    );
+  }
+  return (
+    <>
+      <header>
+        <h1 className="font-medium text-2xl capitalize p-4">shopping cart</h1>
+        <hr />
+      </header>
+      <section className="w-11/12 mx-auto grid lg:grid-cols-4 lg:mt-6">
+        <div className="lg:col-span-3">
+          {cartProducts.map((product, index) => {
+            return <CartItem key={product.id} index={index} {...product} />;
+          })}
+        </div>
+
+        <section className="cartTotals w-full lg:justify-self-center  text-md  ">
+          <div
+            className={`w-full ${
+              isDarkMode ? "bg-gray-700 text-white" : "bg-gray-300 "
+            }capitalize p-2 rounded-lg `}
           >
-            <div className="img-container">
-              <img
-                src={image}
-                alt={title}
-                className=" w-[210px] h-[170px] object-cover rounded-lg "
-              />
-            </div>
-            <div className="title">
-              <h1 className="font-medium capitalize text-xl">{title}</h1>
-              <p className="company font-medium text-gray-600">{company}</p>
-              <span className="flex items-center gap-2 text-lg capitalize">
-                color:
-                <p
-                  className="color w-6 h-6 inline-block rounded-[50%]"
-                  style={{ backgroundColor: product.itemColor }}
-                ></p>
-              </span>
-            </div>
-            <div className="amount flex flex-col gap-2">
-              <Select
-                label={"amount"}
-                name={"amount"}
-                options={[1, 2, 3, 4, 5]}
-                defaultValue={"2"}
-              />
-              <button className="remove w-[20%]">remove</button>
-            </div>
-            <div className="price sm:justify-self-end ">
-              <h4>{formatPrice(price)}</h4>
-            </div>
+            <p className="subtotal flex justify-between p-2">
+              <span>subtotal</span>
+              {formatPrice(totalPriceOfCart)}
+            </p>
             <hr />
-          </section>
-        );
-      })}
-    </section>
+            <p className="subtotal flex justify-between p-2">
+              <span>shipping</span>
+              {formatPrice(shipping)}
+            </p>
+            <hr />
+            <p className="subtotal flex justify-between p-2">
+              <span>tax</span>
+              {formatPrice(tax)}
+            </p>
+            <hr className="border-gray-600" />
+            <p className="subtotal flex justify-between p-2">
+              <span>order total</span>
+              {formatPrice(grandTotal)}
+            </p>
+          </div>
+          <div className=" mt-4">
+            <Link
+              to="/login"
+              className="p-2 block text-center w-full  bg-violet-500 text-white text-lg capitalize rounded-lg"
+            >
+              please login
+            </Link>
+          </div>
+        </section>
+      </section>
+    </>
   );
 };
 
