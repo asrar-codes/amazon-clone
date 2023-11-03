@@ -41,6 +41,7 @@ const reducer = (state, action) => {
           }
           return item;
         });
+
         return {
           ...state,
           cartProducts: newProducts,
@@ -72,19 +73,18 @@ const reducer = (state, action) => {
       return { ...state, cartProducts: newCartProducts2 };
 
     case "GET_CART_TOTALS":
-      localStorage.setItem(
-        "cartDetails",
-        JSON.stringify({
-          cartProducts: state.cartProducts,
-          noOfItemsInCart: action.payload.noOfItems,
-          totalPriceOfCart: action.payload.totalPrice,
-        })
-      );
       return {
         ...state,
         noOfItemsInCart: action.payload.noOfItems,
         totalPriceOfCart: action.payload.totalPrice,
       };
+    case "SET_USER":
+      return { ...state, user: action.payload };
+    case "CLEAR_USER":
+      return { ...state, cartProducts: [], user: null };
+    case "GET_USER_CART":
+      return { ...state, cartProducts: action.payload };
+
     default:
       throw new Error(`you're not handling a dispatch: ${action.type}`);
   }

@@ -64,7 +64,9 @@ const Contact = () => {
                 type="email"
                 name="email"
                 className={` ${
-                  isDarkMode ? "bg-gray-700 text-white" : "border-slate-600 "
+                  isDarkMode.dark
+                    ? "bg-gray-700 text-white"
+                    : "border-slate-600 "
                 }p-1 text-lg  border rounded-md`}
                 placeholder="Enter your email"
                 autoComplete="current-email"

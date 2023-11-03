@@ -1,17 +1,20 @@
 import React, { useContext } from "react";
 import LoginBtn from "../components/LoginBtn";
 LoginBtn;
-import { Form, Link, redirect, useActionData } from "react-router-dom";
+import { Form, Link, redirect, useNavigation } from "react-router-dom";
 import { LoginInput } from "../components";
 import { auth } from "../firebase/firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useGlobalContext } from "../context/context";
+import { toast } from "react-toastify";
 
+export let LOGINDATA;
 export const action = async ({ request }) => {
   // const response = await createUserWithEmailAndPassword(auth);
   const formData = await request.formData();
   // console.log(formData);
   const data = Object.fromEntries(formData);
+  LOGINDATA = data;
   // console.log(data);
   let user;
   try {
@@ -22,18 +25,27 @@ export const action = async ({ request }) => {
     );
     // console.log(response);
     user = response.user;
-    console.log(user);
+    updateProfile(user, {
+      displayName: data.username,
+      userId: user.uid,
+    });
+    toast.success("logged in successfully");
   } catch (error) {
     console.log(error);
+    toast.error(error.code);
+    return redirect("/signup");
   }
-  redirect("/");
-  return user;
+
+  return redirect("/");
 };
 
 const SignUp = () => {
-  const data = useActionData();
-  console.log(data);
   const { formRef, emailRef, passwordRef } = useGlobalContext();
+  // console.log(LOGINDATA);
+  const navigation = useNavigation();
+  const isLoading = navigation.state === "submitting";
+  // console.log(navigation);
+  // console.log(isLoading);
 
   return (
     <Form
@@ -47,7 +59,11 @@ const SignUp = () => {
         <LoginInput label={"email"} />
         <LoginInput label={"password"} />
 
-        <LoginBtn text="register" background="bg-blue-500" />
+        <LoginBtn
+          text="register"
+          background="bg-blue-500"
+          disabled={isLoading}
+        />
 
         <div className="already-user flex gap-2">
           <p className="capitalize">already a memeber?</p>

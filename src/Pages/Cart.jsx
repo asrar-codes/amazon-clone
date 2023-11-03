@@ -5,7 +5,8 @@ import { formatPrice } from "../utils/formatPrice";
 import { Link } from "react-router-dom";
 
 const Cart = () => {
-  const { cartProducts, totalPriceOfCart, isDarkMode } = useGlobalContext();
+  const { cartProducts, totalPriceOfCart, isDarkMode, user } =
+    useGlobalContext();
   // let totalPrice = 0;
   const tax = (15 / 100) * totalPriceOfCart;
   const shipping = 500;
@@ -34,7 +35,7 @@ const Cart = () => {
         <section className="cartTotals w-full lg:justify-self-center  text-md  ">
           <div
             className={`w-full ${
-              isDarkMode ? "bg-gray-700 text-white" : "bg-gray-300 "
+              isDarkMode.dark ? "bg-gray-700 text-white" : "bg-gray-300 "
             }capitalize p-2 rounded-lg `}
           >
             <p className="subtotal flex justify-between p-2">
@@ -58,12 +59,21 @@ const Cart = () => {
             </p>
           </div>
           <div className=" mt-4">
-            <Link
-              to="/login"
-              className="p-2 block text-center w-full  bg-violet-500 text-white text-lg capitalize rounded-lg"
-            >
-              please login
-            </Link>
+            {user ? (
+              <Link
+                to="/checkout"
+                className="p-2 block text-center w-full  bg-violet-500 text-white text-lg capitalize rounded-lg"
+              >
+                proceed to checkout
+              </Link>
+            ) : (
+              <Link
+                to="/login"
+                className="p-2 block text-center w-full  bg-violet-500 text-white text-lg capitalize rounded-lg"
+              >
+                please login
+              </Link>
+            )}
           </div>
         </section>
       </section>

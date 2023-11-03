@@ -8,18 +8,15 @@ import "react-toastify/dist/ReactToastify.css";
 import ContextProvider from "./context/context";
 import { useNavigate, useSearchParams } from "react-router-dom";
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <ContextProvider
-      useNavigate={useNavigate}
-      useSearchParams={useSearchParams}
-    >
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        // rtl={false}
-      />
-      <App />
-    </ContextProvider>
-  </React.StrictMode>
+  // <React.StrictMode>
+  <ContextProvider useNavigate={useNavigate} useSearchParams={useSearchParams}>
+    <ToastContainer
+      position="top-right"
+      autoClose={5000}
+      hideProgressBar={false}
+      // rtl={false}
+    />
+    <App />
+  </ContextProvider>
+  // </React.StrictMode>
 );

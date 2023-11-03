@@ -1,19 +1,48 @@
-import { Link } from "react-router-dom";
+import { Form, Link, redirect } from "react-router-dom";
 import {
   createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
   signInWithPopup,
   signInWithRedirect,
 } from "firebase/auth";
 import { useGlobalContext } from "../context/context";
 import { auth } from "../firebase/firebase";
 import { googleProvider } from "../firebase/firebase";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useNavigation } from "react-router-dom";
 import LoginBtn from "../components/LoginBtn";
 import { LoginInput } from "../components";
+import { toast } from "react-toastify";
+
+export const action = async ({ request }) => {
+  const formData = await request.formData();
+  // console.log(formData);
+  const data = Object.fromEntries(formData);
+  // console.log(data);
+  try {
+    const response = await signInWithEmailAndPassword(
+      auth,
+      data.email,
+      data.password
+    );
+    // console.log(response);
+    // user = response.user;
+    // console.log(response.user);
+    toast.success("logged in successfully");
+  } catch (error) {
+    console.log(error);
+    toast.error(error.code);
+    return redirect("/login");
+  }
+
+  return redirect("/");
+};
+
 const Login = () => {
   const { logout, formRef, emailRef, isDarkMode, passwordRef } =
     useGlobalContext();
   const navigate = useNavigate();
+  const navigation = useNavigation();
+  const isLoading = navigation.state === "submitting";
   const singIn = async (e) => {
     e.preventDefault();
     const formData = new FormData(formRef.current);
@@ -24,8 +53,8 @@ const Login = () => {
         await createUserWithEmailAndPassword(auth, email, password);
         console.log(auth.currentUser);
         navigate("/");
-        emailRef.current.value = "";
-        passwordRef.current.value = "";
+        // emailRef.current.value = "";
+        // passwordRef.current.value = "";
       }
     } catch (error) {
       console.log(error);
@@ -36,14 +65,17 @@ const Login = () => {
       navigate("/");
       (await signInWithRedirect(auth, googleProvider)) &&
         // console.log(auth.currentUser);
-        console.log("ehe");
+        toast.success("logged in succesfully");
+      console.log("ehe");
     } catch (error) {
       console.log(error);
+      toast.error(error.code);
     }
   };
 
   return (
-    <form
+    <Form
+      method="POST"
       ref={formRef}
       className="form w-11/12 max-w-xl mx-auto mt-20 shadow-md shadow-gray-300"
     >
@@ -55,8 +87,8 @@ const Login = () => {
 
         <LoginBtn
           text=" Sign In"
-          clickFunction={singIn}
           background="bg-violet-500"
+          disabled={isLoading}
         />
         <LoginBtn
           text="continue with google"
@@ -74,7 +106,7 @@ const Login = () => {
       {/* <button onClick={logout} className="btn">
         logout
       </button> */}
-    </form>
+    </Form>
   );
 };
 

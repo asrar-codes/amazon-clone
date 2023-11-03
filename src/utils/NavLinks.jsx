@@ -16,6 +16,11 @@ export const navLinks = [
   },
   {
     id: 4,
+    text: "checkout",
+    url: "checkout",
+  },
+  {
+    id: 5,
     text: "about",
     url: "about",
   },

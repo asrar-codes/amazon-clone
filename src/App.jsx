@@ -16,6 +16,7 @@ import { loader as fetchFeaturedProductsLoader } from "./Pages/SharedLayout";
 import { loader as singleProductLoader } from "./Pages/SingleProduct";
 import { loader as fetchProductsLoader } from "./Pages/Products";
 import { action as createUserAction } from "./Pages/SignUp";
+import { action as loginUserAction } from "./Pages/Login";
 // export const products_url = "https://course-api.com/react-store-products";
 
 // export const single_product_url = `https://course-api.com/react-store-single-product?id=`;
@@ -66,6 +67,7 @@ const router = createBrowserRouter([
   {
     path: "login",
     element: <Login />,
+    action: loginUserAction,
     errorElement: <SinglePageError />,
   },
   {

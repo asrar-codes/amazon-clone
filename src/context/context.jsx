@@ -7,8 +7,20 @@ import React, {
 } from "react";
 import { carouselData } from "../assets/carouselData";
 import reducer from "../reducer";
-import { signOut } from "firebase/auth";
-import { auth } from "../firebase/firebase";
+import { auth, db } from "../firebase/firebase";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { LOGINDATA } from "../Pages/SignUp";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDocs,
+  query,
+  setDoc,
+  updateDoc,
+  where,
+} from "firebase/firestore";
+import { data } from "autoprefixer";
 
 // const products_url = `https://strapi-store-server.onrender.com/api/products`;
 
@@ -26,7 +38,6 @@ const handleThemeToggle = () => {
 };
 
 const cartData = JSON.parse(localStorage.getItem("cartDetails"));
-// console.log(cartData);
 
 const defaultState = {
   pageIndex: 1,
@@ -56,16 +67,102 @@ export const ContextProvider = ({ children }) => {
   >>======= authentication
  */
   const createUserWithEmail = (email, password) => {};
+  const auth = getAuth();
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/auth.user
+        // const userId = user.uid;
+        // console.log(uid);
+
+        // getUserCart().then((cartInfo) => console.log(cartInfo));
+        dispatch({ type: "SET_USER", payload: user });
+
+        (async () => {
+          const cartInfo = await getUserCart();
+          // console.log(cartInfo);
+          if (cartInfo) {
+            // console.log(cartInfo);
+            dispatch({
+              type: "GET_USER_CART",
+              payload: cartInfo.cartProducts,
+            });
+            return;
+          } else {
+            saveUserCart();
+          }
+        })();
+
+        // ...
+      } else {
+        // User is signed out
+        logout();
+        // ...
+      }
+    });
+  }, []);
 
   const logout = async () => {
     try {
       await signOut(auth);
+      dispatch({ type: "CLEAR_USER" });
+      // localStorage.removeItem("cartDetails");
       // console.log(auth.currentUser);
     } catch (error) {
       console.log(error);
     }
   };
+  // logout();
 
+  const saveUserCart = async () => {
+    const data = JSON.parse(localStorage.getItem("cartDetails"));
+    const newData = { ...data, userId: auth.currentUser.uid };
+    // console.log(newData);
+    try {
+      const Ref = doc(db, "users", auth.currentUser.uid);
+      const docRef = await setDoc(Ref, newData);
+      // console.log(docRef);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const updateUserCart = async () => {
+    const data = JSON.parse(localStorage.getItem("cartDetails"));
+    // console.log(data);
+    try {
+      const userCartRef = doc(db, "users", `${auth.currentUser.uid}`);
+      // const userCartRef = doc(db, "users", `${state.user.uid}`);
+      await updateDoc(userCartRef, {
+        ...data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const getUserCart = async () => {
+    try {
+      const userCartRef = collection(db, "users");
+      const q = query(userCartRef, where("userId", "==", auth.currentUser.uid));
+      // console.log(querySnapshot);
+      const querySnapshot = await getDocs(q);
+      // console.log(querySnapshot);
+      // console.log(querySnapshot);
+      let data;
+      // console.log(data)
+      querySnapshot.forEach((doc) => {
+        // console.log(doc.data());
+        // console.log("heahe");
+
+        data = { ...doc.data() };
+      });
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+    return null;
+  };
   const hideSidebar = () => {
     dispatch({ type: "HIDE_SIDEBAR" });
   };
@@ -101,6 +198,11 @@ export const ContextProvider = ({ children }) => {
       type: "ADD_TO_CART",
       payload: cartItem,
     });
+    // console.log(state.cartProducts);
+    if (state.user != null) {
+      // console.log(JSON.parse(localStorage.getItem("cartDetails")));
+      // console.log("updating user cart");
+    }
   };
   /*
 
@@ -108,6 +210,9 @@ export const ContextProvider = ({ children }) => {
  */
   const removeCartItem = (id) => {
     dispatch({ type: "REMOVE_CART_PRODUCTS", payload: id });
+    if (state.user != null) {
+      // updateUserCart();
+    }
   };
 
   const getCartTotals = (products) => {
@@ -126,6 +231,14 @@ export const ContextProvider = ({ children }) => {
       { noOfItems: 0, totalPrice: 0 }
     );
     // console.log(newProducts);
+    localStorage.setItem(
+      "cartDetails",
+      JSON.stringify({
+        cartProducts: state.cartProducts,
+        noOfItemsInCart: newProducts.noOfItems,
+        totalPriceOfCart: newProducts.totalPrice,
+      })
+    );
     dispatch({
       type: "GET_CART_TOTALS",
       payload: {
@@ -136,8 +249,14 @@ export const ContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    // console.log(state.cartProducts);
     // console.log("useEffect");
+
     getCartTotals(state.cartProducts);
+    if (state.user != null) {
+      updateUserCart();
+    }
+
     // console.log(formatPrice(16998));
 
     // console.log(state);
@@ -146,13 +265,13 @@ export const ContextProvider = ({ children }) => {
   const handleCartAmountChange = (id, newAmount) => {
     dispatch({ type: "HANDLE_CART_AMOUNT_CHANGE", payload: { id, newAmount } });
   };
+
   return (
     <AppContext.Provider
       value={{
         ...state,
         hideSidebar,
         toggleDarkMode,
-        logout,
         toggleSidebar,
         formRef,
         emailRef,
@@ -161,6 +280,8 @@ export const ContextProvider = ({ children }) => {
         removeCartItem,
         getCartTotals,
         handleCartAmountChange,
+        logout,
+        updateUserCart,
       }}
     >
       {children}

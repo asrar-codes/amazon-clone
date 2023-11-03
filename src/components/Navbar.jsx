@@ -3,11 +3,19 @@ import { FaBars, FaMoon, FaShoppingCart, FaSun } from "react-icons/fa";
 import { NavLink, Link } from "react-router-dom";
 import { useGlobalContext } from "../context/context";
 import { navLinks } from "../utils/NavLinks";
+import { auth } from "../firebase/firebase";
 
 const Navbar = () => {
-  const { toggleSidebar, isDarkMode, toggleDarkMode, noOfItemsInCart } =
-    useGlobalContext();
+  const {
+    toggleSidebar,
+    isDarkMode,
+    toggleDarkMode,
+    noOfItemsInCart,
+    user,
+    logout,
+  } = useGlobalContext();
   // console.log(noOfItemsInCart);
+  console.log(user?.displayName);
 
   return (
     <>
@@ -21,6 +29,8 @@ const Navbar = () => {
         <p className="hidden sm:block text-4xl border p-1 ml-4">BoxSpace</p>
         <ul className="hidden sm:flex nav-links w-10/12  justify-center gap-4 mx-4 capitalize children:cursor-pointer ">
           {navLinks.map((link) => {
+            const { id, url, text } = link;
+            if ((url === "checkout" || url === "orders") && !user) return;
             return (
               <li key={link.id}>
                 <NavLink
@@ -47,14 +57,25 @@ const Navbar = () => {
             className="darkmode cursor-pointer text-xl"
             onClick={toggleDarkMode}
           >
-            {isDarkMode ? <FaSun /> : <FaMoon />}
+            {isDarkMode.dark ? <FaSun /> : <FaMoon />}
           </p>
-          <Link to="login" className="">
-            Login
-          </Link>
-          <Link to="signup" className="w-max ">
-            Sign up
-          </Link>
+          {user ? (
+            <div>
+              <p className="text-sm">welcome {user.displayName}</p>
+
+              <button onClick={() => logout()}>Logout</button>
+            </div>
+          ) : (
+            <>
+              {" "}
+              <Link to="login" className="">
+                Login
+              </Link>
+              <Link to="signup" className="w-max ">
+                Sign up
+              </Link>
+            </>
+          )}
         </div>
       </nav>
     </>

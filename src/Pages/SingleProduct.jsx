@@ -12,7 +12,7 @@ export const loader = async ({ params }) => {
 };
 const SingleProduct = () => {
   const { product, id } = useLoaderData();
-  const { addToCart } = useGlobalContext();
+  const { addToCart, user } = useGlobalContext();
   const amountRef = useRef();
 
   const newProduct = product.attributes;
