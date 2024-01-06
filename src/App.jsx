@@ -29,74 +29,71 @@ import { useGlobalContext } from "./context/context";
 function App() {
   const { user } = useGlobalContext();
 
-  const router = createBrowserRouter(
-    [
-      {
-        path: "/",
-        element: <SharedLayout />,
-        errorElement: <NotFound />,
-        exact: true,
-        children: [
-          {
-            index: true,
-            element: <Home />,
-            loader: fetchFeaturedProductsLoader,
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <SharedLayout />,
+      errorElement: <NotFound />,
+      exact: true,
+      children: [
+        {
+          index: true,
+          element: <Home />,
+          loader: fetchFeaturedProductsLoader,
 
-            errorElement: <SinglePageError />,
-          },
-          {
-            path: "products",
-            element: <Products />,
-            loader: fetchProductsLoader,
-            errorElement: <SinglePageError />,
-          },
-          {
-            path: "products/:id",
-            loader: singleProductLoader,
-            element: <SingleProduct />,
-            errorElement: <SinglePageError />,
-          },
-          {
-            path: "cart",
-            element: <Cart />,
-            errorElement: <SinglePageError />,
-          },
-          {
-            path: "checkout",
-            element: <CheckOut />,
-            loader: checkoutLoader(user),
-            errorElement: <SinglePageError />,
-          },
-          {
-            path: "orders",
+          errorElement: <SinglePageError />,
+        },
+        {
+          path: "products",
+          element: <Products />,
+          loader: fetchProductsLoader,
+          errorElement: <SinglePageError />,
+        },
+        {
+          path: "products/:id",
+          loader: singleProductLoader,
+          element: <SingleProduct />,
+          errorElement: <SinglePageError />,
+        },
+        {
+          path: "cart",
+          element: <Cart />,
+          errorElement: <SinglePageError />,
+        },
+        {
+          path: "checkout",
+          element: <CheckOut />,
+          loader: checkoutLoader(user),
+          errorElement: <SinglePageError />,
+        },
+        {
+          path: "orders",
 
-            element: <Orders />,
-            loader: ordersLoader(user),
-            errorElement: <SinglePageError />,
-          },
+          element: <Orders />,
+          loader: ordersLoader(user),
+          errorElement: <SinglePageError />,
+        },
 
-          {
-            path: "about",
-            element: <About />,
-            errorElement: <SinglePageError />,
-          },
-        ],
-      },
-      {
-        path: "login",
-        element: <Login />,
-        action: loginUserAction,
-        errorElement: <SinglePageError />,
-      },
-      {
-        path: "signup",
-        element: <SignUp />,
-        action: createUserAction,
-        errorElement: <SinglePageError />,
-      },
-    ],
-    { basename: "/app" }
-  );
+        {
+          path: "about",
+          element: <About />,
+          errorElement: <SinglePageError />,
+        },
+      ],
+    },
+    {
+      path: "login",
+      element: <Login />,
+      action: loginUserAction,
+      errorElement: <SinglePageError />,
+    },
+    {
+      path: "signup",
+      element: <SignUp />,
+      action: createUserAction,
+      errorElement: <SinglePageError />,
+    },
+  ]);
   return <RouterProvider router={router} />;
 }
 
