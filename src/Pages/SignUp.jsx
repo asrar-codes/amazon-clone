@@ -30,6 +30,7 @@ export const action = async ({ request }) => {
       userId: user.uid,
     });
     toast.success("logged in successfully");
+    return redirect("/");
   } catch (error) {
     console.log(error);
     toast.error(error.code);
