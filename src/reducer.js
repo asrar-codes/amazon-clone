@@ -84,7 +84,16 @@ const reducer = (state, action) => {
       return { ...state, cartProducts: [], user: null };
     case "GET_USER_CART":
       return { ...state, cartProducts: action.payload };
-
+    case "HANDLE_ORDERS_SUCCESS":
+      return { ...state, cartProducts: [], orders: action.payload };
+    case "FETCH_ORDERS_SUCCESS":
+      const data = action.payload;
+      if (data) {
+        return { ...state, orders: action.payload };
+      }
+      return { ...state, orders: [] };
+    case "FETCH_ORDERS_FAIL":
+      return { ...state, orders: action.payload };
     default:
       throw new Error(`you're not handling a dispatch: ${action.type}`);
   }

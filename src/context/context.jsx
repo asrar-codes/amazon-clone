@@ -21,6 +21,8 @@ import {
   where,
 } from "firebase/firestore";
 import { data } from "autoprefixer";
+import { toast } from "react-toastify";
+import { redirect } from "react-router-dom";
 
 // const products_url = `https://strapi-store-server.onrender.com/api/products`;
 
@@ -39,9 +41,10 @@ const handleThemeToggle = () => {
 
 const cartData = JSON.parse(localStorage.getItem("cartDetails"));
 
-const defaultState = {
+export const defaultState = {
   pageIndex: 1,
   products: [],
+  orders: [],
   cartProducts: cartData ? cartData.cartProducts : [],
   noOfItemsInCart: 0,
   totalPriceOfCart: 0,
@@ -81,7 +84,7 @@ export const ContextProvider = ({ children }) => {
         dispatch({ type: "SET_USER", payload: user });
 
         (async () => {
-          const cartInfo = await getUserCart();
+          const cartInfo = await getUserCart("users");
           // console.log(cartInfo);
           if (cartInfo) {
             // console.log(cartInfo);
@@ -132,7 +135,7 @@ export const ContextProvider = ({ children }) => {
     const data = JSON.parse(localStorage.getItem("cartDetails"));
     // console.log(data);
     try {
-      const userCartRef = doc(db, "users", `${auth.currentUser.uid}`);
+      const userCartRef = doc(db, "users", auth.currentUser.uid);
       // const userCartRef = doc(db, "users", `${state.user.uid}`);
       await updateDoc(userCartRef, {
         ...data,
@@ -141,10 +144,13 @@ export const ContextProvider = ({ children }) => {
       console.log(error);
     }
   };
-  const getUserCart = async () => {
+  const getUserCart = async (collectionName) => {
     try {
-      const userCartRef = collection(db, "users");
-      const q = query(userCartRef, where("userId", "==", auth.currentUser.uid));
+      const userCartRef = collection(db, collectionName);
+      const q = query(
+        userCartRef,
+        where(collectionName, "==", auth.currentUser.uid)
+      );
       // console.log(querySnapshot);
       const querySnapshot = await getDocs(q);
       // console.log(querySnapshot);
@@ -152,7 +158,7 @@ export const ContextProvider = ({ children }) => {
       let data;
       // console.log(data)
       querySnapshot.forEach((doc) => {
-        // console.log(doc.data());
+        console.log(doc.data());
         // console.log("heahe");
 
         data = { ...doc.data() };
@@ -163,6 +169,7 @@ export const ContextProvider = ({ children }) => {
     }
     return null;
   };
+
   const hideSidebar = () => {
     dispatch({ type: "HIDE_SIDEBAR" });
   };
@@ -254,6 +261,7 @@ export const ContextProvider = ({ children }) => {
 
     getCartTotals(state.cartProducts);
     if (state.user != null) {
+      console.log("updating cart...");
       updateUserCart();
     }
 
@@ -266,6 +274,15 @@ export const ContextProvider = ({ children }) => {
     dispatch({ type: "HANDLE_CART_AMOUNT_CHANGE", payload: { id, newAmount } });
   };
 
+  // orders
+
+  const dispatchOrders = (data) => {
+    dispatch({ type: "HANDLE_ORDERS_SUCCESS", payload: data });
+  };
+  const setOrders = (data) => {
+    dispatch({ type: "FETCH_ORDERS_SUCCESS", payload: data });
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -276,12 +293,15 @@ export const ContextProvider = ({ children }) => {
         formRef,
         emailRef,
         passwordRef,
+        getUserCart,
         addToCart,
         removeCartItem,
         getCartTotals,
         handleCartAmountChange,
         logout,
         updateUserCart,
+        dispatchOrders,
+        setOrders,
       }}
     >
       {children}

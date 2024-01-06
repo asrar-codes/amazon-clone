@@ -28,13 +28,12 @@ export const action = async ({ request }) => {
     // user = response.user;
     // console.log(response.user);
     toast.success("logged in successfully");
+    return redirect("/");
   } catch (error) {
     console.log(error);
     toast.error(error.code);
     return redirect("/login");
   }
-
-  return redirect("/");
 };
 
 const Login = () => {

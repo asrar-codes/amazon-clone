@@ -12,7 +12,7 @@ export const loader = async ({ params }) => {
 };
 const SingleProduct = () => {
   const { product, id } = useLoaderData();
-  const { addToCart, user } = useGlobalContext();
+  const { addToCart, isDarkMode, user } = useGlobalContext();
   const amountRef = useRef();
 
   const newProduct = product.attributes;
@@ -60,7 +60,12 @@ const SingleProduct = () => {
           })}
         </div>
         <p className="text-2xl">Amount</p>
-        <select ref={amountRef} className="amount w-20 border rounded-md">
+        <select
+          ref={amountRef}
+          className={`${
+            isDarkMode.dark ? "bg-gray-700 text-white" : ""
+          }amount w-20 border rounded-md`}
+        >
           <option value={1}>1</option>
           <option value={2}>2</option>
           <option value={3}>3</option>

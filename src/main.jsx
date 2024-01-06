@@ -9,7 +9,7 @@ import ContextProvider from "./context/context";
 import { useNavigate, useSearchParams } from "react-router-dom";
 ReactDOM.createRoot(document.getElementById("root")).render(
   // <React.StrictMode>
-  <ContextProvider useNavigate={useNavigate} useSearchParams={useSearchParams}>
+  <ContextProvider>
     <ToastContainer
       position="top-right"
       autoClose={5000}

@@ -4,7 +4,11 @@ import { useGlobalContext } from "../context/context";
 const LoginInput = ({ label, inputRef }) => {
   const { isDarkMode } = useGlobalContext();
   return (
-    <label htmlFor="{label}" className="flex flex-col capitalize" aria-required>
+    <label
+      htmlFor="{label}"
+      className="flex flex-col gap-1 capitalize"
+      aria-required
+    >
       {label}
       <input
         type={label}

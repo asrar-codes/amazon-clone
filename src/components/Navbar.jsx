@@ -1,9 +1,7 @@
-import React, { useEffect } from "react";
 import { FaBars, FaMoon, FaShoppingCart, FaSun } from "react-icons/fa";
 import { NavLink, Link } from "react-router-dom";
 import { useGlobalContext } from "../context/context";
 import { navLinks } from "../utils/NavLinks";
-import { auth } from "../firebase/firebase";
 
 const Navbar = () => {
   const {
@@ -15,7 +13,7 @@ const Navbar = () => {
     logout,
   } = useGlobalContext();
   // console.log(noOfItemsInCart);
-  console.log(user?.displayName);
+  // console.log(user?.displayName);
 
   return (
     <>
@@ -32,15 +30,15 @@ const Navbar = () => {
             const { id, url, text } = link;
             if ((url === "checkout" || url === "orders") && !user) return;
             return (
-              <li key={link.id}>
+              <li key={id}>
                 <NavLink
-                  to={link.url}
+                  to={url}
                   className={({ isActive }) =>
                     isActive ? "link active" : "link"
                   }
                   end
                 >
-                  {link.text}
+                  {text}
                 </NavLink>
               </li>
             );
