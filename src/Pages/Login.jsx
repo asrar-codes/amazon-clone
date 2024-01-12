@@ -28,6 +28,7 @@ export const action = async ({ request }) => {
     // user = response.user;
     // console.log(response.user);
     toast.success("logged in successfully");
+
     return redirect("/");
   } catch (error) {
     console.log(error);
@@ -89,11 +90,11 @@ const Login = () => {
           background="bg-violet-500"
           disabled={isLoading}
         />
-        <LoginBtn
-          text="continue with google"
+        {/* <LoginBtn
+          text="continue with google (not working yet)"
           clickFunction={signInWithGoogle}
           background="bg-purple-500"
-        />
+        /> */}
         <div className="already-user">
           <p>Not a memeber yet?</p>
           <Link className="capitalize text-purple-700" to="/signup">

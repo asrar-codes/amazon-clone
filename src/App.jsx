@@ -28,7 +28,6 @@ import { useGlobalContext } from "./context/context";
 
 function App() {
   const { user } = useGlobalContext();
-
   const router = createBrowserRouter([
     {
       path: "/",
@@ -94,6 +93,7 @@ function App() {
       errorElement: <SinglePageError />,
     },
   ]);
+
   return <RouterProvider router={router} />;
 }
 
